@@ -1,43 +1,36 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
 )
 
-func main() {
+func readNums(path string) ([]int, error) {
 	var nums []int
 
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
-
-	f, err := os.Open(path)
+	content, err := os.ReadFile(path)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	defer f.Close()
 
-	s := bufio.NewScanner(f)
-	for s.Scan() {
-		if len(s.Text()) > 0 {
-			i, err := strconv.Atoi(s.Text())
+	lines := strings.Split(string(content), "\n")
+
+	for _, l := range lines {
+		if len(l) > 0 {
+			i, err := strconv.Atoi(l)
 			if err != nil {
-				log.Fatal(err)
+				return nil, err
 			}
 			nums = append(nums, i)
 		}
 	}
 
-	fmt.Printf("Part 1 solution: %d\n", part1(nums))
-	fmt.Printf("Part 2 solution: %d\n", part2(nums))
-
-	fmt.Printf("Part 1 solution (generalized): %d\n", generalized(nums, 1))
-	fmt.Printf("Part 2 solution (generalized): %d\n", generalized(nums, 3))
+	return nums, nil
 }
 
 func part1(nums []int) int {
@@ -77,4 +70,20 @@ func generalized(nums []int, wsize int) int {
 	}
 
 	return incs
+}
+
+func main() {
+	_, path, _, _ := runtime.Caller(0)
+	path = filepath.Join(filepath.Dir(path), "input.txt")
+
+	nums, err := readNums(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("Part 1: %d\n", part1(nums))
+	fmt.Printf("Part 2: %d\n", part2(nums))
+
+	fmt.Printf("Part 1 (generalized): %d\n", generalized(nums, 1))
+	fmt.Printf("Part 2 (generalized): %d\n", generalized(nums, 3))
 }
