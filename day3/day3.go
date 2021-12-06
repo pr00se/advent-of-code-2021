@@ -21,9 +21,6 @@ func readLines(path string) ([]string, error) {
 
 func part1(lines []string) int {
 	counts := make([]int, len(lines[0]))
-	for i, _ := range counts {
-		counts[i] = 0
-	}
 
 	for _, l := range lines {
 		for i, c := range l {
