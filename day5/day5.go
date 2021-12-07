@@ -72,8 +72,8 @@ func parsePoint(input string) (point, error) {
 	return p, nil
 }
 
-// plotSegment plots s on chart
-func plotSegment(chart ventMap, s segment) {
+// plotSegment plots s on chart and return the number of new danger zones created
+func plotSegment(chart ventMap, s segment) int {
 	xLength := s.end.x - s.start.x
 	yLength := s.end.y - s.start.y
 
@@ -85,30 +85,30 @@ func plotSegment(chart ventMap, s segment) {
 	xStep := xLength / length
 	yStep := yLength / length
 
+	dangerZones := 0
+
 	// segments include their endpoints, so we need to plot length+1 total points
 	for i, x, y := 0, s.start.x, s.start.y; i <= length; i, x, y = i+1, x+xStep, y+yStep {
 		if chart[x] == nil {
 			chart[x] = make(column)
 		}
 		chart[x][y]++
+
+		if chart[x][y] == 2 {
+			dangerZones++
+		}
 	}
+
+	return dangerZones
 }
 
 func part1(segments []segment) int {
 	chart := make(ventMap)
 
+	dangerZones := 0
 	for _, s := range segments {
 		if s.start.x == s.end.x || s.start.y == s.end.y {
-			plotSegment(chart, s)
-		}
-	}
-
-	dangerZones := 0
-	for _, col := range chart {
-		for _, rating := range col {
-			if rating >= 2 {
-				dangerZones++
-			}
+			dangerZones += plotSegment(chart, s)
 		}
 	}
 
@@ -118,17 +118,9 @@ func part1(segments []segment) int {
 func part2(segments []segment) int {
 	chart := make(ventMap)
 
-	for _, s := range segments {
-		plotSegment(chart, s)
-	}
-
 	dangerZones := 0
-	for _, col := range chart {
-		for _, rating := range col {
-			if rating >= 2 {
-				dangerZones++
-			}
-		}
+	for _, s := range segments {
+		dangerZones += plotSegment(chart, s)
 	}
 
 	return dangerZones
