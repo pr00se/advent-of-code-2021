@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestPart1(t *testing.T) {
 	input := []string{
@@ -21,9 +25,7 @@ func TestPart1(t *testing.T) {
 
 	output := part1(input)
 
-	if output != expected {
-		t.Errorf("Expected: %d Got: %d", expected, output)
-	}
+	assert.Equal(t, expected, output)
 }
 
 func TestPart2(t *testing.T) {
@@ -45,7 +47,5 @@ func TestPart2(t *testing.T) {
 
 	output := part2(input)
 
-	if output != expected {
-		t.Errorf("Expected: %d Got: %d", expected, output)
-	}
+	assert.Equal(t, expected, output)
 }

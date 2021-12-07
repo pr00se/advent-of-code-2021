@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestPart1(t *testing.T) {
 	input := []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263}
@@ -8,9 +12,7 @@ func TestPart1(t *testing.T) {
 
 	output := part1(input)
 
-	if output != expected {
-		t.Errorf("Expected: %d Got: %d", expected, output)
-	}
+	assert.Equal(t, expected, output)
 }
 
 func TestPart2(t *testing.T) {
@@ -19,9 +21,7 @@ func TestPart2(t *testing.T) {
 
 	output := part2(input)
 
-	if output != expected {
-		t.Errorf("Expected: %d Got: %d", expected, output)
-	}
+	assert.Equal(t, expected, output)
 }
 
 func TestGeneralized(t *testing.T) {
@@ -44,8 +44,6 @@ func TestGeneralized(t *testing.T) {
 
 	for _, tc := range tests {
 		output := generalized(tc.nums, tc.wsize)
-		if output != tc.expected {
-			t.Errorf("Expected: %d Got: %d", tc.expected, output)
-		}
+		assert.Equal(t, tc.expected, output)
 	}
 }
