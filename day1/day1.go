@@ -3,31 +3,23 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/pr00se/advent-of-code-2021/data"
 )
 
-func readNums(path string) ([]int, error) {
+func parseInput(input string) ([]int, error) {
 	var nums []int
 
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	lines := strings.Split(string(content), "\n")
+	lines := strings.Split(strings.TrimSpace(input), "\n")
 
 	for _, l := range lines {
-		if len(l) > 0 {
-			i, err := strconv.Atoi(l)
-			if err != nil {
-				return nil, err
-			}
-			nums = append(nums, i)
+		i, err := strconv.Atoi(l)
+		if err != nil {
+			return nil, err
 		}
+		nums = append(nums, i)
 	}
 
 	return nums, nil
@@ -73,10 +65,12 @@ func generalized(nums []int, wsize int) int {
 }
 
 func main() {
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
+	input, err := data.ReadInput()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	nums, err := readNums(path)
+	nums, err := parseInput(input)
 	if err != nil {
 		log.Fatal(err)
 	}

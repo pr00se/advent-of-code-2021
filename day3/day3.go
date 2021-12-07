@@ -3,21 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/pr00se/advent-of-code-2021/data"
 )
-
-func readLines(path string) ([]string, error) {
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	return strings.Split(strings.Trim(string(content), "\n"), "\n"), nil
-}
 
 func part1(lines []string) int {
 	counts := make([]int, len(lines[0]))
@@ -133,13 +123,12 @@ func part2(lines []string) int {
 }
 
 func main() {
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
-
-	lines, err := readLines(path)
+	input, err := data.ReadInput()
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	lines := strings.Split(strings.TrimSpace(string(input)), "\n")
 
 	fmt.Printf("Part 1: %d\n", part1(lines))
 	fmt.Printf("Part 2: %d\n", part2(lines))

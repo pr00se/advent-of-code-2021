@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"log"
 	"math"
-	"os"
-	"path/filepath"
-	"runtime"
-	"strconv"
 	"strings"
+
+	"github.com/pr00se/advent-of-code-2021/data"
 )
 
 type point struct {
@@ -23,23 +21,13 @@ type column map[int]int
 
 type ventMap map[int]column
 
-// readInput reads the file at path and returns the line segments therein
-func readInput(path string) ([]segment, error) {
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	return parseInput(string(content))
-}
-
 // parseInput parses the input string and returns the line segments therein
-func parseInput(input string) ([]segment, error) {
+func parseInput(in string) ([]segment, error) {
 	var (
 		segments []segment
 	)
 
-	lines := strings.Split(strings.TrimSpace(input), "\n")
+	lines := strings.Split(strings.TrimSpace(in), "\n")
 
 	for _, line := range lines {
 		pairs := strings.Fields(line)
@@ -74,15 +62,13 @@ func parsePoint(input string) (point, error) {
 		err error
 	)
 
-	nums := strings.Split(strings.TrimSpace(input), ",")
-	p.x, err = strconv.Atoi(nums[0])
+	nums, err := data.ParseCommaSeparatedInts(input)
 	if err != nil {
 		return p, err
 	}
-	p.y, err = strconv.Atoi(nums[1])
-	if err != nil {
-		return p, err
-	}
+	p.x = nums[0]
+	p.y = nums[1]
+
 	return p, nil
 }
 
@@ -149,10 +135,12 @@ func part2(segments []segment) int {
 }
 
 func main() {
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
+	input, err := data.ReadInput()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	segments, err := readInput(path)
+	segments, err := parseInput(input)
 	if err != nil {
 		log.Fatal(err)
 	}

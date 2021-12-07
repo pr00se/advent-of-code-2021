@@ -3,22 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/pr00se/advent-of-code-2021/data"
 )
-
-// readInput reads the file at path and returns the bingo calls and boards contained therein
-func readInput(path string) ([]int, []*board, error) {
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return parseInput(string(content))
-}
 
 // parseInput parses the input string and returns the bingo calls and boards contained therein
 func parseInput(input string) ([]int, []*board, error) {
@@ -30,13 +19,9 @@ func parseInput(input string) ([]int, []*board, error) {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 
 	// Parse list of bingo calls
-	nums := strings.Split(strings.TrimSpace(lines[0]), ",")
-	for _, n := range nums {
-		i, err := strconv.Atoi(n)
-		if err != nil {
-			return nil, nil, err
-		}
-		calls = append(calls, i)
+	calls, err := data.ParseCommaSeparatedInts(lines[0])
+	if err != nil {
+		return nil, nil, err
 	}
 
 	var (
@@ -106,10 +91,12 @@ func part2(calls []int, boards []*board) int {
 }
 
 func main() {
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
+	input, err := data.ReadInput()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	calls, boards, err := readInput(path)
+	calls, boards, err := parseInput(input)
 	if err != nil {
 		log.Fatal(err)
 	}

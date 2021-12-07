@@ -3,45 +3,9 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
-	"runtime"
-	"strconv"
-	"strings"
+
+	"github.com/pr00se/advent-of-code-2021/data"
 )
-
-// readInput reads the file at path and returns the fish therein
-func readInput(path string) ([]int, error) {
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	return parseInput(string(content))
-}
-
-// parseInput parses the input string and returns the fish therein
-func parseInput(input string) ([]int, error) {
-	var (
-		fish []int
-	)
-
-	lines := strings.Split(strings.TrimSpace(input), "\n")
-
-	for _, line := range lines {
-		nums := strings.Split(strings.TrimSpace(line), ",")
-
-		for _, n := range nums {
-			i, err := strconv.Atoi(n)
-			if err != nil {
-				return nil, err
-			}
-			fish = append(fish, i)
-		}
-	}
-
-	return fish, nil
-}
 
 // simulateFish simulates the growth of our school and returns the total number
 // of fish alive after the given number of days
@@ -87,10 +51,12 @@ func part2(fish []int) int {
 }
 
 func main() {
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
+	input, err := data.ReadInput()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	fish, err := readInput(path)
+	fish, err := data.ParseCommaSeparatedInts(input)
 	if err != nil {
 		log.Fatal(err)
 	}

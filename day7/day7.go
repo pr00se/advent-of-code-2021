@@ -4,45 +4,9 @@ import (
 	"fmt"
 	"log"
 	"math"
-	"os"
-	"path/filepath"
-	"runtime"
-	"strconv"
-	"strings"
+
+	"github.com/pr00se/advent-of-code-2021/data"
 )
-
-// readInput reads the file at path and returns the crab positions therein
-func readInput(path string) ([]int, error) {
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	return parseInput(string(content))
-}
-
-// parseInput parses the input string and returns the crab positions therein
-func parseInput(input string) ([]int, error) {
-	var (
-		crabs []int
-	)
-
-	lines := strings.Split(strings.TrimSpace(input), "\n")
-
-	for _, line := range lines {
-		nums := strings.Split(strings.TrimSpace(line), ",")
-
-		for _, n := range nums {
-			i, err := strconv.Atoi(n)
-			if err != nil {
-				return nil, err
-			}
-			crabs = append(crabs, i)
-		}
-	}
-
-	return crabs, nil
-}
 
 type fuelFunc func(d int) int
 
@@ -89,10 +53,12 @@ func part2(crabs []int) int {
 }
 
 func main() {
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
+	input, err := data.ReadInput()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	crabs, err := readInput(path)
+	crabs, err := data.ParseCommaSeparatedInts(input)
 	if err != nil {
 		log.Fatal(err)
 	}

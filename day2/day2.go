@@ -3,10 +3,9 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
-	"runtime"
 	"strings"
+
+	"github.com/pr00se/advent-of-code-2021/data"
 )
 
 type command struct {
@@ -14,26 +13,19 @@ type command struct {
 	val int
 }
 
-func readCommands(path string) ([]command, error) {
+func parseInput(input string) ([]command, error) {
 	var cmds []command
 
-	content, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	lines := strings.Split(string(content), "\n")
+	lines := strings.Split(strings.TrimSpace(input), "\n")
 	for _, l := range lines {
-		if len(l) > 0 {
-			cmd := command{}
+		cmd := command{}
 
-			_, err := fmt.Sscanf(l, "%s %d", &cmd.op, &cmd.val)
-			if err != nil {
-				return nil, err
-			}
-
-			cmds = append(cmds, cmd)
+		_, err := fmt.Sscanf(l, "%s %d", &cmd.op, &cmd.val)
+		if err != nil {
+			return nil, err
 		}
+
+		cmds = append(cmds, cmd)
 	}
 
 	return cmds, nil
@@ -75,10 +67,12 @@ func part2(cmds []command) int {
 }
 
 func main() {
-	_, path, _, _ := runtime.Caller(0)
-	path = filepath.Join(filepath.Dir(path), "input.txt")
+	input, err := data.ReadInput()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	cmds, err := readCommands(path)
+	cmds, err := parseInput(input)
 	if err != nil {
 		log.Fatal(err)
 	}
