@@ -23,27 +23,3 @@ func TestPart2(t *testing.T) {
 
 	assert.Equal(t, expected, output)
 }
-
-func TestGeneralized(t *testing.T) {
-	tests := []struct {
-		nums     []int
-		wsize    int
-		expected int
-	}{
-		{
-			nums:     []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263},
-			wsize:    1,
-			expected: 7,
-		},
-		{
-			nums:     []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263},
-			wsize:    3,
-			expected: 5,
-		},
-	}
-
-	for _, tc := range tests {
-		output := generalized(tc.nums, tc.wsize)
-		assert.Equal(t, tc.expected, output)
-	}
-}
