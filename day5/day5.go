@@ -22,12 +22,12 @@ type column map[int]int
 type ventMap map[int]column
 
 // parseInput parses the input string and returns the line segments therein
-func parseInput(in string) ([]segment, error) {
+func parseInput(input string) ([]segment, error) {
 	var (
 		segments []segment
 	)
 
-	lines := strings.Split(strings.TrimSpace(in), "\n")
+	lines := strings.Split(strings.TrimSpace(input), "\n")
 
 	for _, line := range lines {
 		pairs := strings.Fields(line)
