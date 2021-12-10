@@ -13,7 +13,7 @@ type fuelFunc func(d int) int
 // optimizeCrabFuel determines the minimum amount of fuel necessary to align
 // crab subs, given their starting positions and a fuel consumption function
 func optimizeCrabFuel(crabs []int, f fuelFunc) int {
-	counts := make(map[int]int)
+	counts := map[int]int{}
 
 	// determine fuel necessary at position 0
 	fuel := 0

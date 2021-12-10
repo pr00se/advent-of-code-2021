@@ -15,9 +15,7 @@ type display struct {
 
 // parseInput parses the input string and returns the displays therein
 func parseInput(input string) ([]display, error) {
-	var (
-		displays []display
-	)
+	var displays []display
 
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 
@@ -37,9 +35,9 @@ func parseInput(input string) ([]display, error) {
 
 // decode correlates patterns with digits and returns the displayed code
 func decode(d display) int {
-	candidates := make(map[int][]int)
-	encoded := make(map[int]int)
-	decoded := make(map[int]int)
+	candidates := map[int][]int{}
+	encoded := map[int]int{}
+	decoded := map[int]int{}
 
 	for _, p := range d.patterns {
 		e := encodePattern(p)
@@ -110,7 +108,7 @@ func decode(d display) int {
 
 // encodePattern encodes a signal pattern into a bitmask
 func encodePattern(s string) int {
-	out := 0
+	var out int
 
 	for _, c := range s {
 		switch c {
@@ -135,7 +133,7 @@ func encodePattern(s string) int {
 }
 
 func part1(displays []display) int {
-	count := 0
+	var count int
 
 	for _, d := range displays {
 		for _, c := range d.codes {
@@ -150,7 +148,7 @@ func part1(displays []display) int {
 }
 
 func part2(displays []display) int {
-	total := 0
+	var total int
 
 	for _, d := range displays {
 		total += decode(d)

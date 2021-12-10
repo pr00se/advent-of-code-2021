@@ -23,9 +23,7 @@ type ventMap map[int]column
 
 // parseInput parses the input string and returns the line segments therein
 func parseInput(input string) ([]segment, error) {
-	var (
-		segments []segment
-	)
+	var segments []segment
 
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 
@@ -103,7 +101,7 @@ func plotSegment(chart ventMap, s segment) int {
 }
 
 func part1(segments []segment) int {
-	chart := make(ventMap)
+	chart := ventMap{}
 
 	dangerZones := 0
 	for _, s := range segments {
@@ -116,7 +114,7 @@ func part1(segments []segment) int {
 }
 
 func part2(segments []segment) int {
-	chart := make(ventMap)
+	chart := ventMap{}
 
 	dangerZones := 0
 	for _, s := range segments {

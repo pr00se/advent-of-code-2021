@@ -32,7 +32,7 @@ func parseInput(input string) ([]command, error) {
 }
 
 func part1(cmds []command) int {
-	hpos, depth := 0, 0
+	var hpos, depth int
 
 	for _, c := range cmds {
 		switch c.op {
@@ -49,7 +49,7 @@ func part1(cmds []command) int {
 }
 
 func part2(cmds []command) int {
-	hpos, depth, aim := 0, 0, 0
+	var hpos, depth, aim int
 
 	for _, c := range cmds {
 		switch c.op {

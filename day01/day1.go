@@ -26,7 +26,7 @@ func parseInput(input string) ([]int, error) {
 }
 
 func countIncreases(nums []int, wsize int) int {
-	incs := 0
+	var incs int
 
 	// Samples that overlap between windows cancel each other out, so
 	// we just need to compare the samples that are unique to each window
