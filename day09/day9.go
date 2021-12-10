@@ -43,9 +43,8 @@ func parseInput(input string) (grid, error) {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 
 	for y, line := range lines {
-		points := strings.Split(strings.TrimSpace(line), "")
-		for x, p := range points {
-			i, err := strconv.Atoi(p)
+		for x, p := range strings.TrimSpace(line) {
+			i, err := strconv.Atoi(string(p))
 			if err != nil {
 				return nil, err
 			}
@@ -66,7 +65,7 @@ MainLoop:
 		// if height at this point is greater than at any of its neighbors,
 		// this isn't the lowest point
 		for _, n := range p.neighbors() {
-			if x, ok := cave[n]; ok && d > x {
+			if x, ok := cave[n]; ok && d >= x {
 				continue MainLoop
 			}
 		}
