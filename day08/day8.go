@@ -13,7 +13,7 @@ type display struct {
 	codes    []string
 }
 
-// parseInput parses the input string and returns the displays therein
+// parseInput parses the input string and returns the displays
 func parseInput(input string) ([]display, error) {
 	var displays []display
 

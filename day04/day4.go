@@ -9,7 +9,7 @@ import (
 	"github.com/pr00se/advent-of-code-2021/data"
 )
 
-// parseInput parses the input string and returns the bingo calls and boards contained therein
+// parseInput parses the input string and returns the bingo calls and boards
 func parseInput(input string) ([]int, []*board, error) {
 	var (
 		calls  []int

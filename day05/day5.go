@@ -21,7 +21,7 @@ type column map[int]int
 
 type ventMap map[int]column
 
-// parseInput parses the input string and returns the line segments therein
+// parseInput parses the input string and returns the line segments
 func parseInput(input string) ([]segment, error) {
 	var segments []segment
 
