@@ -9,12 +9,8 @@ import (
 	"github.com/pr00se/advent-of-code-2021/data"
 )
 
-type point struct {
-	x, y int
-}
-
 type segment struct {
-	start, end point
+	start, end data.Point
 }
 
 type column map[int]int
@@ -34,11 +30,11 @@ func parseInput(input string) ([]segment, error) {
 			return nil, fmt.Errorf("invalid input: %s", line)
 		}
 
-		start, err := parsePoint(pairs[0])
+		start, err := data.ParsePoint(pairs[0])
 		if err != nil {
 			return nil, err
 		}
-		end, err := parsePoint(pairs[2])
+		end, err := data.ParsePoint(pairs[2])
 		if err != nil {
 			return nil, err
 		}
@@ -53,27 +49,10 @@ func parseInput(input string) ([]segment, error) {
 	return segments, nil
 }
 
-// parsePoint parses a comma-separated coordinate pair into a point
-func parsePoint(input string) (point, error) {
-	var (
-		p   point
-		err error
-	)
-
-	nums, err := data.ParseCommaSeparatedInts(input)
-	if err != nil {
-		return p, err
-	}
-	p.x = nums[0]
-	p.y = nums[1]
-
-	return p, nil
-}
-
 // plotSegment plots s on chart and return the number of new danger zones created
 func plotSegment(chart ventMap, s segment) int {
-	xLength := s.end.x - s.start.x
-	yLength := s.end.y - s.start.y
+	xLength := s.end.X - s.start.X
+	yLength := s.end.Y - s.start.Y
 
 	length := int(math.Abs(float64(xLength)))
 	if length == 0 {
@@ -86,7 +65,7 @@ func plotSegment(chart ventMap, s segment) int {
 	dangerZones := 0
 
 	// segments include their endpoints, so we need to plot length+1 total points
-	for i, x, y := 0, s.start.x, s.start.y; i <= length; i, x, y = i+1, x+xStep, y+yStep {
+	for i, x, y := 0, s.start.X, s.start.Y; i <= length; i, x, y = i+1, x+xStep, y+yStep {
 		if chart[x] == nil {
 			chart[x] = make(column)
 		}
@@ -105,7 +84,7 @@ func part1(segments []segment) int {
 
 	dangerZones := 0
 	for _, s := range segments {
-		if s.start.x == s.end.x || s.start.y == s.end.y {
+		if s.start.X == s.end.X || s.start.Y == s.end.Y {
 			dangerZones += plotSegment(chart, s)
 		}
 	}
