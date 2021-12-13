@@ -1,12 +1,44 @@
 package data
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
 
 // Grid represents a 2D plane of values
 type Grid map[Point]int
+
+func (g Grid) String() string {
+	var width, height, cell int
+
+	for p, v := range g {
+		if p.X > width {
+			width = p.X
+		}
+		if p.Y > height {
+			height = p.Y
+		}
+		if len(fmt.Sprint(v)) > cell {
+			cell = len(fmt.Sprint(v))
+		}
+	}
+
+	var sb strings.Builder
+
+	for y := 0; y <= height; y++ {
+		for x := 0; x <= width; x++ {
+			if v, ok := g[Point{X: x, Y: y}]; ok {
+				sb.WriteString(fmt.Sprintf("%*d", cell, v))
+			} else {
+				sb.WriteString(strings.Repeat(" ", cell))
+			}
+		}
+		sb.WriteRune('\n')
+	}
+
+	return sb.String()
+}
 
 // Point represents a point in 2D space
 type Point struct {
