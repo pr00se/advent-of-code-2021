@@ -94,7 +94,7 @@ func (p Point) Diagonal() []Point {
 
 // ParseGrid parses the input string into a Grid
 func ParseGrid(input string) (Grid, error) {
-	var grid = Grid{}
+	grid := Grid{}
 
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 

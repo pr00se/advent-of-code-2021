@@ -10,9 +10,7 @@ import (
 
 // ParseCommaSeparatedInts converts a string of comma separated integers into a []int
 func ParseCommaSeparatedInts(input string) ([]int, error) {
-	var (
-		vals []int
-	)
+	var vals []int
 
 	nums := strings.Split(strings.TrimSpace(input), ",")
 

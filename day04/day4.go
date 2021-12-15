@@ -57,7 +57,6 @@ func parseInput(input string) ([]int, []*board, error) {
 }
 
 func part1(calls []int, boards []*board) int {
-
 	for _, call := range calls {
 		for _, b := range boards {
 			b.addCall(call)
@@ -72,7 +71,7 @@ func part1(calls []int, boards []*board) int {
 }
 
 func part2(calls []int, boards []*board) int {
-	var bingoes = map[int]bool{}
+	bingoes := map[int]bool{}
 	for _, call := range calls {
 		for i, b := range boards {
 			b.addCall(call)
