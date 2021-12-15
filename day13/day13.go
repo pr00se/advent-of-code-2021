@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"strconv"
 	"strings"
 
 	"github.com/pr00se/advent-of-code-2021/data"
@@ -27,11 +26,12 @@ func parseInput(input string) (data.Grid, []fold, error) {
 		if len(line) > 0 {
 			p, err := data.ParsePoint(line)
 			if err != nil {
-				i, err := parseFold(line)
+				f := fold{}
+				_, err := fmt.Sscanf(strings.TrimSpace(line), "fold along %c=%d", &f.axis, &f.val)
 				if err != nil {
 					return nil, nil, err
 				}
-				folds = append(folds, i)
+				folds = append(folds, f)
 			} else {
 				grid[p] = 0
 			}
@@ -39,20 +39,6 @@ func parseInput(input string) (data.Grid, []fold, error) {
 	}
 
 	return grid, folds, nil
-}
-
-// parseFold parses a string into a fold
-// assumes lines of the form "<some text> x=235"
-func parseFold(input string) (fold, error) {
-	halves := strings.Split(strings.TrimSpace(input), "=")
-
-	axis := rune(halves[0][len(halves[0])-1])
-	val, err := strconv.Atoi(strings.TrimSpace(halves[1]))
-	if err != nil {
-		return fold{}, err
-	}
-
-	return fold{axis: axis, val: val}, nil
 }
 
 // foldGrid folds the grid along fold, updating the locations of affected points
@@ -86,8 +72,8 @@ func part1(grid data.Grid, folds []fold) int {
 }
 
 func part2(grid data.Grid, folds []fold) string {
-	for _, i := range folds {
-		foldGrid(grid, i)
+	for _, f := range folds {
+		foldGrid(grid, f)
 	}
 	return grid.String()
 }
