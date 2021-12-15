@@ -62,7 +62,7 @@ func plotSegment(chart ventMap, s segment) int {
 	xStep := xLength / length
 	yStep := yLength / length
 
-	dangerZones := 0
+	var dangerZones int
 
 	// segments include their endpoints, so we need to plot length+1 total points
 	for i, x, y := 0, s.start.X, s.start.Y; i <= length; i, x, y = i+1, x+xStep, y+yStep {
@@ -80,9 +80,11 @@ func plotSegment(chart ventMap, s segment) int {
 }
 
 func part1(segments []segment) int {
-	chart := ventMap{}
+	var (
+		chart       = ventMap{}
+		dangerZones int
+	)
 
-	dangerZones := 0
 	for _, s := range segments {
 		if s.start.X == s.end.X || s.start.Y == s.end.Y {
 			dangerZones += plotSegment(chart, s)
@@ -93,9 +95,11 @@ func part1(segments []segment) int {
 }
 
 func part2(segments []segment) int {
-	chart := ventMap{}
+	var (
+		chart       = ventMap{}
+		dangerZones int
+	)
 
-	dangerZones := 0
 	for _, s := range segments {
 		dangerZones += plotSegment(chart, s)
 	}

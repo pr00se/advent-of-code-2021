@@ -20,7 +20,7 @@ func part1(lines []string) int {
 		}
 	}
 
-	g, e := 0, 0
+	var g, e int
 
 	for _, c := range counts {
 		g = g << 1

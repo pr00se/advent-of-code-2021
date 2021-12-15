@@ -98,7 +98,7 @@ func decode(d display) int {
 		}
 	}
 
-	output := 0
+	var output int
 	for _, c := range d.codes {
 		output = (output * 10) + decoded[encodePattern(c)]
 	}

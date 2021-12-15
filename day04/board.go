@@ -61,7 +61,7 @@ func (b *board) hasBingo() bool {
 // reset resets the board
 func (b *board) reset() {
 	b.patterns = []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	score := 0
+	var score int
 	for k := range b.nums {
 		score += k
 	}

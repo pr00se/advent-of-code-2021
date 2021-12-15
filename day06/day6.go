@@ -35,7 +35,7 @@ func simulateFish(fish []int, days int) int {
 	}
 
 	// return sum of all fish born on each day + original fish
-	total := 0
+	var total int
 	for _, count := range newFish {
 		total += count
 	}

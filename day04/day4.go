@@ -24,10 +24,8 @@ func parseInput(input string) ([]int, []*board, error) {
 		return nil, nil, err
 	}
 
-	var (
-		b   *board
-		row int
-	)
+	var b *board
+	var row int
 	// Parse bingo boards; assume 5 rows per board
 	for _, line := range lines[2:] {
 		if b == nil {
