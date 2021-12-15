@@ -114,7 +114,7 @@ func ParseGrid(input string) (Grid, error) {
 
 // ParsePoint parses a comma-separated coordinate pair into a Point
 func ParsePoint(input string) (Point, error) {
-	nums, err := ParseCommaSeparatedInts(input)
+	nums, err := ParseCommaSeparatedInts(strings.TrimSpace(input))
 	if err != nil {
 		return Point{}, err
 	}
