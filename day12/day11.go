@@ -25,7 +25,10 @@ func runStep(grid data.Grid) int {
 	}
 
 	// execute the flashes, and the flashes those flashes cause, and so on...
-	for flashing := toFlash; len(flashing) > 0; flashing, toFlash = toFlash, nil {
+	for len(toFlash) > 0 {
+		flashing := toFlash
+		toFlash = nil
+
 		for _, p := range flashing {
 			// octopuses only flash once per turn
 			if flashed[p] {

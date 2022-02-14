@@ -32,17 +32,12 @@ MainLoop:
 func findBasin(cave data.Grid, p data.Point) []data.Point {
 	var (
 		basin   []data.Point
-		toVisit []data.Point
 		visited = map[data.Point]bool{}
 	)
 
 	visited[p] = true
-	toVisit = p.Adjacent()
 
-	for len(toVisit) > 0 {
-		visiting := toVisit
-		toVisit = nil
-
+	for visiting, toVisit := p.Adjacent(), []data.Point{}; len(visiting) > 0; visiting, toVisit = toVisit, nil {
 		for _, v := range visiting {
 			if h, ok := cave[v]; !ok || h == 9 {
 				continue

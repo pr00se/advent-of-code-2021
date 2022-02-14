@@ -15,29 +15,27 @@ type fuelFunc func(d int) int
 func optimizeCrabFuel(crabs []int, f fuelFunc) int {
 	counts := map[int]int{}
 
-	// determine fuel necessary at position 0
-	fuel := 0
+	// determine starting position; assume all positions are positive
+	startPos := -1
 	for _, p := range crabs {
 		counts[p]++
-		fuel += f(p)
+		if startPos == -1 || p < startPos {
+			startPos = p
+		}
 	}
 
-	// loop calculating fuel consumption at positions 1..n, stopping once consumption
-	// starts to increase again
-	i, nextFuel := 1, 0
-	for {
+	fuel := -1
+	// loop calculating fuel consumption at positions startPos..n, stopping once consumption
+	// starts to increase
+	for pos, nextFuel := startPos, 0; ; pos, fuel, nextFuel = pos+1, nextFuel, 0 {
 		for p, c := range counts {
-			dist := int(math.Abs(float64(p - i)))
+			dist := int(math.Abs(float64(p - pos)))
 			nextFuel += f(dist) * c
 		}
 
-		if nextFuel > fuel {
+		if fuel != -1 && nextFuel > fuel {
 			break
 		}
-
-		i++
-		fuel = nextFuel
-		nextFuel = 0
 	}
 
 	return fuel
